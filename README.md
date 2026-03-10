@@ -1,152 +1,130 @@
-KickOff — Football Information Platform
+# KickOff - Football Information Platform
 
-KickOff is een voetbal webapplicatie geïnspireerd op apps zoals FotMob.
-Gebruikers kunnen wedstrijden, teams, spelers en competities bekijken en statistieken volgen.
+A FotMob-inspired football (soccer) web application built with PHP and MySQL. Browse live scores, league standings, team squads, and player statistics across the top European competitions.
 
-Het project is gebouwd met PHP en MySQL en laat zien hoe een grotere webapplicatie met meerdere datamodellen en functionaliteiten wordt opgebouwd.
+## Features
 
-Functionaliteiten
+- **Match Dashboard** — View upcoming, live, and finished matches filtered by league
+- **Match Details** — Live scores, match events (goals, cards, substitutions), lineups, and statistics (possession, shots, etc.)
+- **League Standings** — Full tables with W/D/L records, goal difference, points, and top scorers per league
+- **Team Pages** — Squad roster by position (GK/DEF/MID/FWD), recent results, and upcoming fixtures
+- **Player Profiles** — Career stats, goal history, nationality, and position info
+- **Search** — Full-text search across teams and players
+- **User Accounts** — Register, login, and manage a personal favorites list (teams, players, leagues)
 
-Wedstrijd overzicht
-Bekijk aankomende, live en gespeelde wedstrijden.
+### Supported Leagues
 
-Wedstrijd details
-Score, wedstrijd gebeurtenissen (doelpunten, kaarten, wissels) en statistieken.
+- Premier League
+- La Liga
+- Bundesliga
+- Serie A
+- Ligue 1
+- UEFA Champions League
 
-Competitie standen
-Volledige ranglijsten met punten, doelsaldo en top scorers.
+## Tech Stack
 
-Team pagina’s
-Selectie per positie (keeper, verdediger, middenvelder, aanvaller) en recente wedstrijden.
+| Layer | Technology |
+|-------|-----------|
+| Backend | PHP 7.4+ |
+| Database | MySQL 8.0+ / MySQLi |
+| Frontend | HTML5, CSS3 (vanilla) |
+| Auth | PHP Sessions + password_hash() |
 
-Speler profielen
-Informatie over spelers inclusief statistieken en positie.
+## Project Structure
 
-Zoekfunctie
-Zoek naar teams of spelers.
-
-Gebruikersaccounts
-
-Registreren
-
-Inloggen
-
-Favorieten opslaan (teams, spelers of competities)
-
-Ondersteunde competities
-
-Premier League
-
-La Liga
-
-Bundesliga
-
-Serie A
-
-Ligue 1
-
-UEFA Champions League
-
-Gebruikte technologieën
-
-Backend: PHP (Object-Oriented Programming)
-
-Database: MySQL
-
-Frontend: HTML5, CSS3
-
-Authenticatie: PHP Sessions + password_hash()
-
-Projectstructuur
+```
 project-fotmob/
-│
 ├── classes/
-│   ├── Database.php
-│   ├── User.php
-│   ├── Match.php
-│   ├── Team.php
-│   ├── Player.php
-│   ├── League.php
-│   ├── Standing.php
-│   └── Favorite.php
-│
+│   ├── Database.php      # Singleton DB connection
+│   ├── User.php          # Registration, login, logout
+│   ├── Match.php         # Match queries & events
+│   ├── Team.php          # Team data & squad
+│   ├── Player.php        # Player profiles & stats
+│   ├── League.php        # League management
+│   ├── Standing.php      # League standings
+│   └── Favorite.php      # User favorites
 ├── includes/
-│   ├── config.php
-│   ├── navbar.php
-│   └── footer.php
-│
+│   ├── config.php        # DB & site configuration
+│   ├── navbar.php        # Navigation component
+│   └── footer.php        # Footer component
 ├── css/
-│   └── style.css
-│
-├── index.php
-├── match.php
-├── team.php
-├── player.php
-├── standings.php
-├── search.php
-├── favorites.php
-├── login.php
-├── register.php
-├── logout.php
-│
-└── fotmob.sql
-Vereisten
+│   └── style.css         # Dark theme stylesheet
+├── index.php             # Home — match dashboard
+├── match.php             # Match detail page
+├── team.php              # Team detail page
+├── player.php            # Player profile page
+├── standings.php         # Standings & top scorers
+├── search.php            # Search page
+├── favorites.php         # User favorites
+├── login.php             # Login page
+├── register.php          # Registration page
+├── logout.php            # Session logout
+└── fotmob.sql            # Database schema + seed data
+```
 
-PHP 7.4 of hoger
+## Installation
 
-MySQL
+### Requirements
 
-Lokale server zoals XAMPP, Laragon of WAMP
+- PHP 7.4 or higher
+- MySQL 8.0 or higher
+- A local server like XAMPP, Laragon, or WAMP
 
-Installatie
+### Steps
 
-Plaats het project in je webserver map:
+1. **Clone or download** the project into your web server's root directory:
+   ```
+   /xampp/htdocs/Portofolio-opdrachten/project-fotmob/
+   ```
 
-/xampp/htdocs/project-fotmob/
+2. **Import the database** via phpMyAdmin or the MySQL CLI:
+   ```bash
+   mysql -u root -p < fotmob.sql
+   ```
+   This creates the `fotmob` database and inserts all seed data.
 
-Importeer de database:
+3. **Configure the database** in `includes/config.php` if needed:
+   ```php
+   define('DB_HOST', 'localhost');
+   define('DB_USER', 'root');
+   define('DB_PASS', '');
+   define('DB_NAME', 'fotmob');
+   ```
 
-fotmob.sql
+4. **Start your server** and open the site in your browser:
+   ```
+   http://localhost/Portofolio-opdrachten/project-fotmob/
+   ```
 
-Dit maakt de database fotmob aan met voorbeelddata.
+## Database Schema
 
-Controleer de database instellingen in:
+The database consists of 11 tables:
 
-includes/config.php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'fotmob');
+| Table | Description |
+|-------|-------------|
+| `users` | User accounts |
+| `leagues` | Competition info |
+| `teams` | Club data |
+| `players` | Player profiles |
+| `matches` | Match fixtures and results |
+| `match_events` | Goals, cards, substitutions |
+| `match_stats` | Per-match statistics |
+| `match_lineups` | Starting XI and subs |
+| `standings` | League table positions |
+| `player_stats` | Aggregated player stats |
+| `favorites` | User-saved favorites |
 
-Start Apache en MySQL en open het project in je browser:
+## Security
 
-http://localhost/project-fotmob/
-Database
+- Passwords hashed with `password_hash()` / `password_verify()`
+- All queries use **prepared statements** to prevent SQL injection
+- User output escaped with `htmlspecialchars()`
+- Session-based authentication
 
-De applicatie gebruikt 11 tabellen, waaronder:
+## Screenshots
 
-Tabel	Beschrijving
-users	Gebruikersaccounts
-leagues	Competitie informatie
-teams	Club informatie
-players	Speler profielen
-matches	Wedstrijd data
-match_events	Wedstrijd gebeurtenissen
-match_stats	Wedstrijd statistieken
-standings	Competitie standen
-player_stats	Speler statistieken
-favorites	Gebruiker favorieten
-Beveiliging
+> _Add screenshots here once the project is running._
 
-Wachtwoorden worden opgeslagen met password_hash()
+## License
 
-Queries gebruiken prepared statements (bescherming tegen SQL injection)
-
-Output wordt geescaped met htmlspecialchars()
-
-Authenticatie via PHP sessions
-
-Doel van dit project
-
-Dit project is gemaakt als onderdeel van mijn software development portfolio.
-Het laat zien hoe een grotere PHP webapplicatie kan worden gebouwd met meerdere datamodellen, gebruikersaccounts en database relaties.
+This project was built as a portfolio assignment and is for educational purposes only.
